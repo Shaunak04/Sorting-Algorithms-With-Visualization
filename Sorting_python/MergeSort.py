@@ -41,8 +41,6 @@ def merge(arr, start, mid, end, drawArray, timer):
         start += 1
 
 def merge_sort(arr, start, end, drawArray, timer):
-    global comparison
-    global retarr
     if start < end:
         mid = int((start + end) / 2)
         merge_sort(arr, start, mid, drawArray, timer)
@@ -54,6 +52,6 @@ def merge_sort(arr, start, end, drawArray, timer):
                         else DARK_BLUE if x > mid and x <=end else BLUE for x in range(len(arr))])
         time.sleep(timer)
 
-    drawArray(arr, [FINAL_GREEN for x in range(len(arr))])
     retarr[0] = comparison
+    drawArray(arr, [FINAL_GREEN for x in range(len(arr))])
     return retarr
