@@ -5,44 +5,55 @@
 
 import time
 from colors import *
+comparison = 0
+Timecomplexity = "O(nlogn)"
+Spacecomplexity = "O(n)"
+define = "Divide and Conquer strategy where we recursively split the array into 2 halves until it can no more split, then we merge the atomic elements by comparing and placing in sorted order"
+retarr = [comparison,Timecomplexity,Spacecomplexity,define]
 
-def merge_sort(arr,drawArray,timer):
-    if len(arr)>1:
-        mid = len(arr)//2
-        L = arr[:mid]
-        R = arr[mid:]
-        merge_sort(L,drawArray,timer)
-        merge_sort(R,drawArray,timer)
-        
-        #Merging 
-        i=0
-        j=0
-        k=0
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                arr[k] = L[i]
-                i += 1
-            else:
-                arr[k] = R[j]
-                j += 1
-            k += 1
- 
-        # Checking if any element was left
-        while i < len(L):
-            arr[k] = L[i]
-            i += 1
-            k += 1
- 
-        while j < len(R):
-            arr[k] = R[j]
-            j += 1
-            k += 1
-        drawArray(arr, [PURPLE if x >= 0 and x < mid else YELLOW if x == mid 
-                        else DARK_BLUE if x > mid and x <=len(arr)-1 else BLUE for x in range(len(arr))])
+def merge(arr, start, mid, end, drawArray, timer):
+    global comparison
+    global retarr
+    p = start
+    q = mid + 1
+    tempArray = []
+
+    for i in range(start, end+1):
+        if p > mid:
+            comparison+=1
+            tempArray.append(arr[q])
+            q+=1
+        elif q > end:
+            comparison+=1
+            tempArray.append(arr[p])
+            p+=1
+        elif arr[p] < arr[q]:
+            comparison+=1
+            tempArray.append(arr[p])
+            p+=1
+        else:
+            comparison+=1
+            tempArray.append(arr[q])
+            q+=1
+
+    for p in range(len(tempArray)):
+        arr[start] = tempArray[p]
+        start += 1
+
+def merge_sort(arr, start, end, drawArray, timer):
+    global comparison
+    global retarr
+    if start < end:
+        mid = int((start + end) / 2)
+        merge_sort(arr, start, mid, drawArray, timer)
+        merge_sort(arr, mid+1, end, drawArray, timer)
+
+        merge(arr, start, mid, end, drawArray, timer)
+
+        drawArray(arr, [PURPLE if x >= start and x < mid else YELLOW if x == mid 
+                        else DARK_BLUE if x > mid and x <=end else BLUE for x in range(len(arr))])
         time.sleep(timer)
-    drawArray(arr, [PURPLE if x >= 0 and x < mid else YELLOW if x == mid 
-                        else DARK_BLUE if x > mid and x <=len(arr)-1 else FINAL_GREEN for x in range(len(arr))])
-    
-# merge_sort(arr)
-# print("sorted",arr)
-        
+
+    drawArray(arr, [FINAL_GREEN for x in range(len(arr))])
+    retarr[0] = comparison
+    return retarr
