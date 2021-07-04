@@ -9,7 +9,7 @@ from colors import *
 comparison = 0
 Timecomplexity = "O(n^2)"
 Spacecomplexity = "O(1)"
-define = "The array is virtually split into a sorted and an unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part."
+define = "Explanation: The array is virtually split into a sorted and an unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part."
 retarr = [comparison,Timecomplexity,Spacecomplexity,define]
 def insertion_sort(arr,drawArray,timer):
     global comparison

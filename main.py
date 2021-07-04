@@ -8,6 +8,7 @@ from Sorting_python.BubbleSort import bubble_sort
 from Sorting_python.SelectionSort import selection_sort
 from Sorting_python.InsertionSort import insertion_sort
 from Sorting_python.MergeSort import merge_sort
+from Sorting_python.quickSort import quick_sort
 # from Python.quickSort import quick_sort
 # from Python.heapSort import heap_sort
 # from Python.countingSort import counting_sort
@@ -24,7 +25,7 @@ lret = []
 algorithm_name = StringVar()
 speed_name = StringVar()
 arr = []
-algo_list = ['Bubble Sort', 'Insertion Sort', 'Selection Sort', 'Merge Sort']
+algo_list = ['Bubble Sort', 'Insertion Sort', 'Selection Sort', 'Merge Sort','Quick Sort']
 speed_list = ['Fast(100%)', 'Medium(65%)', 'Slow(25%)']
 
 
@@ -93,7 +94,7 @@ UI_frame1 = Frame(root ,bg=LIGHT_GRAY)
 UI_frame1.grid(row=3, column=0, padx=0, pady=5)
 
 def display_stats(lret):
-    ldefine = Label(UI_frame1,font=("Arial", 12), text="Working: "+str(lret[3]), bg=LIGHT_GRAY,width=80,wraplength=700, justify="center")
+    ldefine = Label(UI_frame1,font=("Arial", 12), text=str(lret[3]), bg=LIGHT_GRAY,width=80,wraplength=700, justify="center")
     ldefine.grid(row=0, column=0, padx=0, pady=5, sticky=W)
 
     lcomp = Label(UI_frame1,font=("Arial", 13), text="Comparison: "+str(lret[0]), bg=LIGHT_GRAY,width=80)
@@ -125,8 +126,9 @@ def sort():
     elif algo_menu.get() == 'Insertion Sort':
         lret =insertion_sort(arr, drawArray, timer)
         display_stats(lret)
-    # elif algo_menu.get() == 'Merge Sort':
-    #     merge_sort(arr, 0, len(arr)-1, drawArray, timer)
+    elif algo_menu.get() == 'Quick Sort':
+        lret = quick_sort(arr, 0, len(arr)-1, drawArray, timer)
+        display_stats(lret)
     else:
         lret =  merge_sort(arr,0,len(arr)-1,drawArray,timer)
         display_stats(lret)
