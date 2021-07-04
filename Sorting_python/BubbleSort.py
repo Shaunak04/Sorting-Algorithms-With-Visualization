@@ -2,14 +2,13 @@
 # TIME COMPLEXITY: O(n^2)
 # SPACE COMPLEXITY: O(1)
 
-
 import time
 from colors import *
 
 comparison = 0
 Timecomplexity = "O(n^2)"
 Spacecomplexity = "O(1)"
-define = "Explanation: Repeatedly swap the adjacent elements in wrong order"
+define = "Explanation: Repeatedly swap the adjacent elements in wrong order until array is sorted"
 retarr = [comparison,Timecomplexity,Spacecomplexity,define]
 
 def bubble_sort(arr,drawArray,timer):

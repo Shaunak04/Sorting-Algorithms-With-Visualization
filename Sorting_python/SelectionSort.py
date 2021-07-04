@@ -9,7 +9,7 @@ from colors import *
 comparison = 0
 Timecomplexity = "O(n^2)"
 Spacecomplexity = "O(1)"
-define = "While traversing through the array, find the index of next minimum number in the unsorted section, and swap the elements at minimum index and begining of unsorted section"
+define = "Explanation: While traversing through the array, find the index of next minimum number in the unsorted section, and swap the elements at minimum index and begining of unsorted section"
 retarr = [comparison,Timecomplexity,Spacecomplexity,define]
 
 def selection_sort(arr,drawArray,timer):
@@ -32,5 +32,3 @@ def selection_sort(arr,drawArray,timer):
     retarr[0] = comparison
     drawArray(arr, [FINAL_GREEN for x in range(len(arr))])
     return retarr
-
-# print("Sorted array: ",selection_sort(arr))
