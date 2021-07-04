@@ -15,12 +15,12 @@ from Sorting_python.MergeSort import merge_sort
 
 # Main window 
 root = Tk()
+root.geometry("1200x700")
 root.title("Sorting Algorithms Visualization")
-root.maxsize(1000, 700)
 root.resizable(False, False) 
 root.config(bg = DARK_GRAY)
 
-
+lret = []
 algorithm_name = StringVar()
 speed_name = StringVar()
 arr = []
@@ -31,29 +31,30 @@ speed_list = ['Fast(100%)', 'Medium(65%)', 'Slow(25%)']
 # Drawing the numerical array as bars
 def drawArray(arr, colorArray):
     canvas.delete("all")
-    canvas_width = 800
+    canvas_width = 1150
     canvas_height = 400
     x_width = canvas_width / (len(arr) + 1)
     offset = 4
-    spacing = 2
+    spacing = 1.5
     normalizedData = [i / max(arr) for i in arr]
-
+    # playsound("./resources/note.mp3")
     for i, height in enumerate(normalizedData):
         x0 = i * x_width + offset + spacing
         y0 = canvas_height - height * 390
         x1 = (i + 1) * x_width + offset
         y1 = canvas_height
         canvas.create_rectangle(x0, y0, x1, y1, fill=colorArray[i])
-
     root.update_idletasks()
 
 
 # Randomly generate array
 def generate():
     global arr
-
+    global lret
+    for widgets in UI_frame1.winfo_children():
+      widgets.destroy() 
     arr = []
-    for i in range(0, 100):
+    for i in range(0, 200):
         random_value = random.randint(1, 150)
         arr.append(random_value)
 
@@ -65,36 +66,15 @@ def set_speed():
     if speed_menu.get() == 'Slow(25%)':
         return 0.25
     elif speed_menu.get() == 'Medium(60%)':
-        return 0.065
+        return 0.09
     else:
-        return 0.0001
+        return 0.00003
 
 
-def sort():
-    global arr
-    timer = set_speed()
-    
-    if algo_menu.get() == 'Bubble Sort':
-        bubble_sort(arr, drawArray, timer)
-    elif algo_menu.get() == 'Selection Sort':
-        selection_sort(arr, drawArray, timer)
-    elif algo_menu.get() == 'Insertion Sort':
-        insertion_sort(arr, drawArray, timer)
-    # elif algo_menu.get() == 'Merge Sort':
-    #     merge_sort(arr, 0, len(arr)-1, drawArray, timer)
-    else:
-        merge_sort(arr, drawArray, timer)
-
-    # elif algo_menu.get() == 'Quick Sort':
-    #     quick_sort(arr, 0, len(arr)-1, drawArray, timer)
-    # elif algo_menu.get() == 'Heap Sort':
-    #     heap_sort(arr, drawArray, timer)
-    # else:
-    #     counting_sort(arr, drawArray, timer)
 
 
 ### User interface ###
-UI_frame = Frame(root, width= 400, height=300, bg=LIGHT_GRAY)
+UI_frame = Frame(root, width= 500, height=300, bg=LIGHT_GRAY)
 UI_frame.grid(row=0, column=0, padx=0, pady=10)
 
 l1 = Label(UI_frame, text="Algorithm: ", bg=LIGHT_GRAY)
@@ -109,16 +89,58 @@ speed_menu = ttk.Combobox(UI_frame, textvariable=speed_name, values=speed_list)
 speed_menu.grid(row=1, column=1, padx=5, pady=5)
 speed_menu.current(0)
 
-canvas = Canvas(root, width=800, height=400, bg=BLACK)
-canvas.grid(row=1, column=0, padx=10, pady=5)
+UI_frame1 = Frame(root ,bg=LIGHT_GRAY)
+UI_frame1.grid(row=3, column=0, padx=0, pady=5)
 
+def display_stats(lret):
+    ldefine = Label(UI_frame1,font=("Arial", 12), text="Working: "+str(lret[3]), bg=LIGHT_GRAY,width=80,wraplength=700, justify="center")
+    ldefine.grid(row=0, column=0, padx=0, pady=5, sticky=W)
+
+    lcomp = Label(UI_frame1,font=("Arial", 13), text="Comparison: "+str(lret[0]), bg=LIGHT_GRAY,width=80)
+    lcomp.grid(row=1, column=0, padx=0, pady=3, sticky=W)
+
+    ltime = Label(UI_frame1,font=("Arial", 13), text="Time Complexity: "+str(lret[1]), bg=LIGHT_GRAY,width=80)
+    ltime.grid(row=2,column=0, padx=10, pady=3, sticky=W)
+
+    lspace = Label(UI_frame1,font=("Arial", 13), text="Space Complexity: "+str(lret[2]), bg=LIGHT_GRAY,width=80)
+    lspace.grid(row=3,column=0, padx=0, pady=3, sticky=W)
+
+
+
+canvas = Canvas(root, width=1150, height=400, bg=BLACK)
+canvas.grid(row=1, column=0, padx=25, pady=5)
+
+def sort():
+    global arr
+    global lret
+    timer = set_speed()
+    
+    if algo_menu.get() == 'Bubble Sort':
+        timer = 0
+        lret = bubble_sort(arr, drawArray, timer)
+        display_stats(lret)
+    elif algo_menu.get() == 'Selection Sort':
+        lret = selection_sort(arr, drawArray, timer)
+        display_stats(lret)
+    elif algo_menu.get() == 'Insertion Sort':
+        lret =insertion_sort(arr, drawArray, timer)
+        display_stats(lret)
+    # elif algo_menu.get() == 'Merge Sort':
+    #     merge_sort(arr, 0, len(arr)-1, drawArray, timer)
+    else:
+        lret =  merge_sort(arr,0,len(arr)-1,drawArray,timer)
+        display_stats(lret)
+    # elif algo_menu.get() == 'Quick Sort':
+    #     quick_sort(arr, 0, len(arr)-1, drawArray, timer)
+    # elif algo_menu.get() == 'Heap Sort':
+    #     heap_sort(arr, drawArray, timer)
+    # else:
+    #     counting_sort(arr, drawArray, timer)
 b1 = Button(UI_frame, text="Sort", command=sort,fg=WHITE, bg=GRAY)
 b1.grid(row=2, column=1, padx=5, pady=5)
 
 b3 = Button(UI_frame, text="Generate Array", command=generate, fg=WHITE,bg=GRAY)
 b3.grid(row=2, column=0, padx=5, pady=5)
-UI_frame1 = Frame(root, width= 500, height=100, bg=LIGHT_GRAY)
-UI_frame1.grid(row=3, column=0, padx=0, pady=0)
 
 
 
