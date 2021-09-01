@@ -9,10 +9,7 @@ from Sorting_python.SelectionSort import selection_sort
 from Sorting_python.InsertionSort import insertion_sort
 from Sorting_python.MergeSort import merge_sort
 from Sorting_python.quickSort import quick_sort
-# from Python.quickSort import quick_sort
-# from Python.heapSort import heap_sort
-# from Python.countingSort import counting_sort
-
+from Sorting_python.countingSort import counting_sort
 
 # Main window 
 root = Tk()
@@ -25,9 +22,8 @@ lret = []
 algorithm_name = StringVar()
 speed_name = StringVar()
 arr = []
-algo_list = ['Bubble Sort', 'Insertion Sort', 'Selection Sort', 'Merge Sort','Quick Sort']
+algo_list = ['Bubble Sort', 'Insertion Sort', 'Selection Sort', 'Counting Sort','Merge Sort','Quick Sort']
 speed_list = ['Fast(100%)', 'Medium(65%)', 'Slow(25%)']
-
 
 # Drawing the numerical array as bars
 def drawArray(arr, colorArray):
@@ -128,6 +124,9 @@ def sort():
         display_stats(lret)
     elif algo_menu.get() == 'Quick Sort':
         lret = quick_sort(arr, 0, len(arr)-1, drawArray, timer)
+        display_stats(lret)
+    elif algo_menu.get() == 'Counting Sort':
+        lret = counting_sort(arr, drawArray, timer)
         display_stats(lret)
     else:
         lret =  merge_sort(arr,0,len(arr)-1,drawArray,timer)

@@ -1,2 +1,2 @@
 # creates a python package to store all the algorithms
-# Package name: Python
+# Package name: Sorting_python
